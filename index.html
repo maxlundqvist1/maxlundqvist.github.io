@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matematik – elevportal</title>
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#f5f7fb,#101522);--surface:light-dark(#fff,#171d2b);--surface2:light-dark(#eef2f8,#20283a);--text:light-dark(#182033,#f4f7fb);--muted:light-dark(#647089,#aeb9cc);--border:light-dark(#dfe5ee,#303a4f);--accent:#4169e1;--accent2:#7057d8;--good:#18855b;--shadow:0 16px 40px rgba(24,32,51,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{min-height:100vh;background:var(--bg)}
+.hero{padding:42px clamp(20px,5vw,72px) 34px;background:linear-gradient(135deg,#1c2850,#4056a6 55%,#6e5bc7);color:#fff}.hero-inner{max-width:1180px;margin:auto}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;opacity:.82}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:10px 0 12px;letter-spacing:-.04em}.hero p{max-width:700px;margin:0;color:#e9edff;font-size:17px;line-height:1.55}.search{margin-top:24px;display:flex;gap:10px;max-width:680px}.search input{flex:1;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;border-radius:14px;padding:14px 16px;font-size:15px;outline:none}.search input::placeholder{color:#dce2ff}.search button{border:0;border-radius:14px;padding:0 18px;background:#fff;color:#24325e;font-weight:800;cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:24px clamp(20px,5vw,72px) 56px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tab{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:11px 16px;border-radius:12px;font-weight:800;cursor:pointer}.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}.tab .count{opacity:.7;margin-left:5px;font-weight:700}
+.course-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}.course-head h2{font-size:30px;margin:0 0 6px;letter-spacing:-.025em}.course-head p{margin:0;color:var(--muted)}.actions{display:flex;gap:9px}.btn{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:10px 14px;border-radius:11px;font-weight:800;cursor:pointer}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.chapter{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow)}.chapter-top{display:flex;justify-content:space-between;gap:12px}.chapter h3{margin:0;font-size:19px}.chapter p{color:var(--muted);line-height:1.5;margin:8px 0 16px}.badge{font-size:11px;font-weight:800;background:var(--surface2);padding:6px 9px;border-radius:999px;white-space:nowrap}.materials{display:grid;gap:8px}.material{display:flex;align-items:center;gap:10px;padding:10px 11px;border:1px solid var(--border);border-radius:11px;background:var(--surface2)}.material-icon{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--surface);font-size:13px}.material a,.material button{color:var(--text);font-weight:700;text-decoration:none;border:0;background:none;padding:0;text-align:left;cursor:pointer}.material small{display:block;color:var(--muted);font-weight:500;margin-top:2px}.empty{padding:40px;text-align:center;border:1px dashed var(--border);border-radius:18px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.show{display:flex}.dialog{width:min(540px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.25)}.dialog h3{margin:0 0 16px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{font:inherit;border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:10px;padding:10px 12px}.field textarea{min-height:90px;resize:vertical}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.notice{font-size:12px;color:var(--muted);margin-top:10px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.course-head{align-items:flex-start;flex-direction:column}.hero{padding-top:30px}.search{flex-direction:column}.search button{height:46px}.actions{width:100%}.actions .btn{flex:1}}
+.admin-launch{position:fixed;right:18px;bottom:18px;z-index:20;border:0;border-radius:999px;padding:12px 16px;background:#182033;color:#fff;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,.2);cursor:pointer}
+.admin-panel{position:fixed;inset:0;background:rgba(8,12,24,.58);display:none;z-index:30;padding:18px}.admin-panel.show{display:flex;align-items:center;justify-content:center}
+.admin-shell{width:min(1180px,100%);height:min(92vh,900px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:22px;box-shadow:0 30px 100px rgba(0,0,0,.3);display:flex;flex-direction:column;overflow:hidden}
+.admin-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}.admin-head h2{margin:0;font-size:22px}.admin-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.admin-body{display:grid;grid-template-columns:250px 1fr;min-height:0;flex:1}.admin-side{padding:16px;border-right:1px solid var(--border);overflow:auto}.admin-main{padding:20px;overflow:auto}
+.admin-list{display:grid;gap:7px}.admin-list button{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:10px;text-align:left;font-weight:750;cursor:pointer}.admin-list button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.admin-card{border:1px solid var(--border);border-radius:16px;padding:16px;background:var(--surface2);margin-bottom:14px}.admin-card h3{margin:0 0 12px}.admin-row{display:flex;gap:8px;flex-wrap:wrap}.admin-row>*{flex:1}
+.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.admin-field{display:grid;gap:5px}.admin-field.full{grid-column:1/-1}.admin-field label{font-size:12px;font-weight:800}.admin-field input,.admin-field textarea,.admin-field select{font:inherit;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:9px;padding:9px 10px}.admin-field textarea{min-height:90px;resize:vertical}
+.admin-item{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--border);border-radius:11px;padding:11px;background:var(--surface);margin-top:8px}.admin-item small{color:var(--muted);display:block;margin-top:3px}.admin-actions{display:flex;gap:7px;flex-wrap:wrap}.admin-status{font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;background:var(--surface2)}.admin-status.live{background:#d9f4e8;color:#136743}
+.admin-note{font-size:12px;color:var(--muted);line-height:1.5}
+@media(max-width:760px){.admin-body{grid-template-columns:1fr}.admin-side{border-right:0;border-bottom:1px solid var(--border);max-height:190px}.admin-grid{grid-template-columns:1fr}.admin-field.full{grid-column:auto}.admin-shell{height:96vh}.admin-head{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero"><div class="hero-inner"><div class="eyebrow">Matematik • ELEVPORTAL</div><h1>Din väg genom matematiken</h1><p>Samlat material för kurserna Matematik grund, 1, 2 och 3. Välj en kurs och öppna ett kapitel för att hitta genomgångar, övningar, videor och annat stöd.</p><div class="search"><input id="search" placeholder="Sök efter kapitel eller material…"><button onclick="doSearch()">Sök</button></div></div></header>
+<main class="shell"><nav class="tabs" id="tabs"></nav><section id="course"></section></main>
+</div>
+<div class="modal" id="modal"><div class="dialog"><h3 id="modalTitle">Lägg till</h3><div id="form"></div><div class="dialog-actions"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="saveModal()">Spara</button></div><div class="notice">Materialet sparas lokalt i den här webbläsaren.</div></div></div>
+<script>
+const seed={
+"Matematik grund":{desc:"Grundläggande matematik med progression mot gymnasienivå.",chapters:[
+{title:"Taluppfattning och tals användning",desc:"Tal, bråk, decimaler, procent, potenser och räkneregler.",items:["Tal och talsystem","Bråk och decimalform","Procent","Potenser och grundpotensform","De fyra räknesätten","Överslagsräkning och rimlighet"]},
+{title:"Algebra",desc:"Likheter, variabler, uttryck, formler och ekvationer.",items:["Algebraiska uttryck","Formler","Linjära ekvationer","Enkla andragradsekvationer"]},
+{title:"Geometri",desc:"Geometriska former, mått, skala, area, volym och Pythagoras sats.",items:["Geometriska figurer","Omkrets och area","Volym","Skala","Vinklar","Pythagoras sats"]},
+{title:"Statistik och sannolikhet",desc:"Tabeller, diagram, lägesmått, spridning och sannolikhet.",items:["Tabeller och diagram","Medelvärde, median och typvärde","Sannolikhet","Spridning"]},
+{title:"Samband och förändring",desc:"Proportionalitet, förändring, koordinatsystem och enkla funktioner.",items:["Proportionalitet","Koordinatsystem","Grafer och samband","Förändringsfaktor"]},
+{title:"Problemlösning",desc:"Strategier, resonemang och matematisk kommunikation.",items:["Problemlösningsstrategier","Resonemang","Matematisk kommunikation"]}]},
+"Matematik 1":{desc:"Grundstruktur för Matematik 1 med algebra, funktioner, geometri, statistik och problemlösning.",chapters:[
+{title:"Aritmetik, algebra och funktioner",desc:"Algebraiska uttryck, funktioner, linjära samband, ekvationer och exponentialfunktioner.",items:["Algebraiska uttryck och formler","Funktioner: ord, tabell, formel och graf","Linjära funktioner och räta linjen","Linjära ekvationer och olikheter","Exponentialfunktioner","Potenser"]},
+{title:"Geometri",desc:"Mätning, skala, likformighet och geometriska samband.",items:["Skala och likformighet","Vinklar","Pythagoras sats","Geometrisk problemlösning"]},
+{title:"Statistik",desc:"Beskrivning och tolkning av data.",items:["Tabeller och diagram","Lägesmått","Spridningsmått","Statistisk tolkning"]},
+{title:"Sannolikhet",desc:"Grundläggande sannolikhetsbegrepp och beräkningar.",items:["Sannolikhet","Kombinatoriska resonemang","Sannolikhet i vardag och samhälle"]},
+{title:"Problemlösning och modeller",desc:"Matematiska modeller, problemlösning, resonemang och kommunikation.",items:["Problemlösningsstrategier","Matematiska modeller","Rimlighet och kontroll","Digitala verktyg"]},
+{title:"Program- och yrkesspecifikt innehåll",desc:"Matematik kopplad till arbetsliv och utbildning.",items:["Procent och andelar i arbetslivet","Mätning och enheter","Kostnads- och förbrukningsberäkningar","Kalkylprogram"]}]},
+"Matematik 2":{desc:"Fördjupning i algebra, funktioner, statistik, logik, geometri och digitala verktyg.",chapters:[
+{title:"Aritmetik, algebra och funktioner",desc:"Linjär algebra, potenser, logaritmer, andragradsfunktioner och ekvationer.",items:["Linjära ekvationssystem","Potenser och potensfunktioner","Logaritmer","Exponentialekvationer","Kvadreringsreglerna","Andragradsfunktioner","Andragradsekvationer","Rotekvationer"]},
+{title:"Statistik",desc:"Fördjupad statistik med spridningsmått, normalfördelning och regression.",items:["Percentiler","Standardavvikelse","Normalfördelning","Regressionsanalys","Korrelationskoefficient"]},
+{title:"Logik och geometri",desc:"Matematiskt språk, bevis och geometriska satser.",items:["Implikation och ekvivalens","Definitioner, satser och bevis","Likformighet","Pythagoras sats","Koordinatgeometri"]},
+{title:"Digitala verktyg och programmering",desc:"Digitala metoder för beräkningar och problemlösning.",items:["Grafritande verktyg","Ekvationslösning digitalt","Databearbetning","Programmering som problemlösningsverktyg"]},
+{title:"Problemlösning och tillämpningar",desc:"Problemlösning kopplad till utbildning, samhälle och kritisk granskning.",items:["Matematiska modeller","Hållbar utveckling","Källkritik med matematik","Tillämpningsuppgifter"]}]},
+"Matematik 3":{desc:"Fördjupning med fokus på algebra, gränsvärden, derivata och integraler.",chapters:[
+{title:"Algebra och rationella uttryck",desc:"Absolutbelopp, rationella uttryck och polynom.",items:["Absolutbelopp","Rationella uttryck","Polynom","Polynomekvationer"]},
+{title:"Gränsvärden och derivata",desc:"Gränsvärde, förändringshastighet, derivata och deriveringsregler.",items:["Gränsvärde","Sekant och tangent","Ändringskvot","Derivata","Deriveringsregler","Talet e och naturlig logaritm"]},
+{title:"Derivata och optimering",desc:"Andraderivata, extremvärden och sambandet mellan graf och derivator.",items:["Andraderivata","Extremvärden","Teckenstudium","Optimeringsproblem"]},
+{title:"Integraler",desc:"Primitiva funktioner, bestämda integraler och area.",items:["Primitiv funktion","Bestämd integral","Integral och area","Integraler med potensfunktioner","Integraler med exponentialfunktioner"]},
+{title:"Trigonometri och geometri",desc:"Enhetscirkeln och trigonometriska samband.",items:["Enhetscirkeln","Trigonometriska begrepp","Sinus- och cosinussatsen","Areasatsen"]},
+{title:"Digitala verktyg och problemlösning",desc:"Numeriska och symbolhanterande verktyg och avancerad problemlösning.",items:["CAS och symbolhantering","Grafisk analys","Numeriska metoder","Matematiska modeller","Bevis och resonemang"]}]}
+};
+let data=JSON.parse(localStorage.getItem("mathPortalData")||"null")||seed;
+let current=Object.keys(data)[0], adminState={course:current,chapter:0};
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function escAttr(s){return esc(s).replace(/`/g,"&#96;")}
+function save(){localStorage.setItem("mathPortalData",JSON.stringify(data))}
+function icon(type){return ({pdf:"PDF",video:"▶",link:"↗",assignment:"✓",text:"T"})[type]||"T"}
+
+function renderTabs(){document.getElementById("tabs").innerHTML=Object.keys(data).map(k=>`<button class="tab ${k===current?"active":""}" onclick="selectCourse('${escAttr(k)}')">${esc(k)}<span class="count">${data[k].chapters.length}</span></button>`).join("")}
+function render(){
+ renderTabs();
+ const c=data[current];
+ document.getElementById("course").innerHTML=`<div class="course-head"><div><h2>${esc(current)}</h2><p>${esc(c.desc||"")}</p></div></div><div class="grid">${c.chapters.map((ch,i)=>`<article class="chapter"><div class="chapter-top"><h3>${esc(ch.title)}</h3><span class="badge">${ch.items.length} material</span></div><p>${esc(ch.desc||"")}</p><div class="materials">${ch.items.map((x,j)=>{const m=typeof x==="string"?{title:x,type:"text"}:x;return `<div class="material"><span class="material-icon">${icon(m.type)}</span><div><button onclick="openStudentMaterial(${i},${j})">${esc(m.title)}</button><small>${m.type==="assignment"?"Uppgift":m.type==="video"?"Video":m.type==="pdf"?"PDF":m.type==="link"?"Länk":"Genomgång"}</small></div></div>`}).join("")}</div></article>`).join("")}</div>`;
+}
+function selectCourse(k){current=k;adminState.course=k;adminState.chapter=0;render()}
+function openStudentMaterial(ci,ii){
+ const m=data[current].chapters[ci].items[ii];
+ const x=typeof m==="string"?{title:m,type:"text"}:m;
+ if(x.url){window.open(x.url,"_blank","noopener,noreferrer");return}
+ alert((x.title||"Material")+(x.description?`\n\n${x.description}`:"")+(x.task?`\n\n${x.task}`:""));
+}
+function doSearch(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ if(!q){render();return}
+ const c=data[current],matches=[];
+ c.chapters.forEach((ch,i)=>{if((ch.title+" "+ch.desc).toLowerCase().includes(q))matches.push(i);ch.items.forEach(x=>{const t=typeof x==="string"?x:x.title;if(t.toLowerCase().includes(q)&&!matches.includes(i))matches.push(i)})});
+ document.getElementById("course").innerHTML=`<div class="course-head"><div><h2>Sökresultat</h2><p>${matches.length} kapitel matchar “${esc(q)}” i ${esc(current)}.</p></div><button class="btn" onclick="render()">Visa alla</button></div>${matches.length?`<div class="grid">${matches.map(i=>{const ch=c.chapters[i];return `<article class="chapter"><div class="chapter-top"><h3>${esc(ch.title)}</h3><span class="badge">${ch.items.length} material</span></div><p>${esc(ch.desc||"")}</p>${ch.items.map((x,j)=>{const m=typeof x==="string"?{title:x,type:"text"}:x;return `<div class="material"><span class="material-icon">${icon(m.type)}</span><div><button onclick="openStudentMaterial(${i},${j})">${esc(m.title)}</button></div></div>`}).join("")}</article>`}).join("")}</div>`:'<div class="empty">Inget hittades. Prova ett annat sökord.</div>'}
+}
+document.getElementById("search").addEventListener("keydown",e=>{if(e.key==="Enter")doSearch()});
+
+function adminCourse(k){adminState.course=k;adminState.chapter=0;renderAdmin()}
+function adminChapter(i){adminState.chapter=i;renderAdmin()}
+function renderAdmin(){
+ const c=data[adminState.course]; if(!c)return;
+ adminState.chapter=Math.min(adminState.chapter,Math.max(0,c.chapters.length-1));
+ const ch=c.chapters[adminState.chapter];
+ document.getElementById("adminCourses").innerHTML=Object.keys(data).map(k=>`<button class="${k===adminState.course?"active":""}" onclick="adminCourse('${escAttr(k)}')">${esc(k)} · ${data[k].chapters.length}</button>`).join("");
+ document.getElementById("adminMain").innerHTML=`<div class="admin-card"><div class="admin-row"><div><h3>${esc(adminState.course)}</h3><div class="admin-note">${esc(c.desc||"")}</div></div><button class="btn primary" onclick="adminAddChapter()">+ Nytt kapitel</button></div></div>
+ <div class="admin-card"><h3>Kapitel</h3><div class="admin-list">${c.chapters.map((x,i)=>`<button class="${i===adminState.chapter?"active":""}" onclick="adminChapter(${i})">${esc(x.title)} · ${x.items.length}</button>`).join("")}</div></div>
+ ${ch?`<div class="admin-card"><div class="admin-row"><div><h3>${esc(ch.title)}</h3><div class="admin-note">${esc(ch.desc||"")}</div></div><button class="btn" onclick="adminDeleteChapter()">Ta bort</button></div><div class="admin-actions" style="margin-top:12px"><button class="btn primary" onclick="adminNewMaterial()">+ Lägg till material</button><button class="btn" onclick="adminEditChapter()">Redigera kapitel</button></div></div>
+ <div class="admin-card"><h3>Material</h3>${ch.items.length?ch.items.map((x,i)=>{const m=typeof x==="string"?{title:x,type:"text",published:true}:x;return `<div class="admin-item"><div><strong>${esc(m.title)}</strong><small>${esc(m.type||"text")} · ${m.published===false?"Utkast":"Publicerat"}</small></div><div class="admin-actions"><span class="admin-status ${m.published===false?"":"live"}">${m.published===false?"UTKAST":"LIVE"}</span><button class="btn" onclick="adminEditMaterial(${i})">Redigera</button><button class="btn" onclick="adminDeleteMaterial(${i})">Ta bort</button></div></div>`}).join(""):'<div class="admin-note">Inget material ännu.</div>'}</div>`:'<div class="admin-card"><div class="admin-note">Skapa ett kapitel för att börja.</div></div>'}
+ <div class="admin-card"><h3>Publicering</h3><div class="admin-note">Ändringar sparas lokalt i webbläsaren. Exportera innehållet som JSON för backup eller flytt till en annan portal.</div><div class="admin-actions" style="margin-top:10px"><button class="btn primary" onclick="adminPublish()">✓ Spara</button><button class="btn" onclick="adminExport()">Exportera JSON</button><button class="btn" onclick="adminImport()">Importera JSON</button></div></div>`;
+}
+function adminAddChapter(){const t=prompt("Namn på kapitel");if(!t?.trim())return;data[adminState.course].chapters.push({title:t.trim(),desc:"",items:[]});adminState.chapter=data[adminState.course].chapters.length-1;save();render();renderAdmin()}
+function adminEditChapter(){const ch=data[adminState.course].chapters[adminState.chapter];const t=prompt("Kapitel",ch.title);if(t===null)return;const d=prompt("Beskrivning",ch.desc||"");ch.title=t.trim()||ch.title;if(d!==null)ch.desc=d.trim();save();render();renderAdmin()}
+function adminDeleteChapter(){if(!confirm("Ta bort kapitlet och allt material i det?"))return;data[adminState.course].chapters.splice(adminState.chapter,1);adminState.chapter=Math.max(0,adminState.chapter-1);save();render();renderAdmin()}
+function materialForm(old,callback){
+ const wrap=document.createElement("div");wrap.className="modal show";wrap.innerHTML=`<div class="dialog"><h3>${old?"Redigera material":"Lägg till material"}</h3><div class="admin-grid">
+ <div class="admin-field full"><label>Namn</label><input id="mTitle" value="${esc(old?.title||"")}"></div>
+ <div class="admin-field"><label>Typ</label><select id="mType"><option value="pdf">PDF</option><option value="link">Länk</option><option value="video">Video</option><option value="assignment">Uppgift</option><option value="text">Text / genomgång</option></select></div>
+ <div class="admin-field"><label>Status</label><select id="mPub"><option value="1">Publicerat</option><option value="0">Utkast</option></select></div>
+ <div class="admin-field full"><label>Länk / filadress</label><input id="mUrl" placeholder="https://…" value="${esc(old?.url||"")}"></div>
+ <div class="admin-field full"><label>Beskrivning</label><textarea id="mDesc">${esc(old?.description||"")}</textarea></div>
+ <div class="admin-field full"><label>Uppgiftstext</label><textarea id="mTask">${esc(old?.task||"")}</textarea></div>
+ </div><div class="admin-note">PDF, video och externa resurser använder en HTTPS-adress. För riktig central fillagring behöver portalen senare kopplas till en molntjänst.</div><div class="dialog-actions"><button class="btn" id="cancel">Avbryt</button><button class="btn primary" id="ok">Spara</button></div></div>`;
+ document.body.appendChild(wrap);wrap.querySelector("#mType").value=old?.type||"text";wrap.querySelector("#mPub").value=old?.published===false?"0":"1";
+ wrap.querySelector("#cancel").onclick=()=>wrap.remove();wrap.querySelector("#ok").onclick=()=>{const m={title:wrap.querySelector("#mTitle").value.trim(),type:wrap.querySelector("#mType").value,published:wrap.querySelector("#mPub").value==="1",url:wrap.querySelector("#mUrl").value.trim(),description:wrap.querySelector("#mDesc").value.trim(),task:wrap.querySelector("#mTask").value.trim()};if(!m.title)return alert("Ange ett namn.");callback(m);wrap.remove()}
+}
+function adminNewMaterial(){materialForm(null,m=>{data[adminState.course].chapters[adminState.chapter].items.push(m);save();render();renderAdmin()})}
+function adminEditMaterial(i){const old=data[adminState.course].chapters[adminState.chapter].items[i];materialForm(typeof old==="string"?{title:old,type:"text"}:old,m=>{data[adminState.course].chapters[adminState.chapter].items[i]=m;save();render();renderAdmin()})}
+function adminDeleteMaterial(i){if(!confirm("Ta bort materialet?"))return;data[adminState.course].chapters[adminState.chapter].items.splice(i,1);save();render();renderAdmin()}
+function adminPublish(){save();render();renderAdmin();alert("Innehållet är sparat.")}
+function adminExport(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="matematik-portal-innehall.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function adminImport(){const input=document.createElement("input");input.type="file";input.accept="application/json";input.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||typeof x!=="object")throw Error();data=x;current=Object.keys(data)[0];adminState={course:current,chapter:0};save();render();renderAdmin();alert("Innehållet importerades.")}catch(e){alert("Filen kunde inte läsas.")}};r.readAsText(input.files[0])};input.click()}
+
+function buildAdmin(){
+ const b=document.createElement("button");b.className="admin-launch";b.textContent="⚙️ Lärarläge";b.onclick=()=>document.getElementById("adminPanel").classList.add("show");document.body.appendChild(b);
+ const p=document.createElement("div");p.id="adminPanel";p.className="admin-panel";p.innerHTML=`<div class="admin-shell"><div class="admin-head"><div><h2>Central innehållshantering</h2><p>Lägg till, redigera och publicera kursmaterial för eleverna.</p></div><div class="admin-actions"><button class="btn" onclick="adminExport()">Exportera</button><button class="btn" onclick="adminImport()">Importera</button><button class="btn" onclick="document.getElementById('adminPanel').classList.remove('show')">Stäng</button></div></div><div class="admin-body"><aside class="admin-side"><div class="admin-note">Kurser</div><div class="admin-list" id="adminCourses"></div><hr style="border:0;border-top:1px solid var(--border);margin:16px 0"><div class="admin-note">Tips</div><div class="admin-note" style="margin-top:8px">Använd Exportera JSON för backup. För en gemensam lärardatabas behöver portalen senare kopplas till central lagring och inloggning.</div></aside><section class="admin-main" id="adminMain"></section></div></div>`;
+ p.addEventListener("click",e=>{if(e.target===p)p.classList.remove("show")});document.body.appendChild(p);renderAdmin();
+}
+render();buildAdmin();
+</script>
+</body>
+</html>
